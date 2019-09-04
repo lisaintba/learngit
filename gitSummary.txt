@@ -1,0 +1,78 @@
+1. 创建版本库：repository，可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪，以便任何时刻都可以追踪历史，或者在将来某个时刻可以“还原”。 
+       创建一个空目录：
+* $ mkdir learngit
+* $ cd learngit
+* $ pwd        （用于显示当前目录）
+
+2. 通过git init命令把这个目录变成Git可以管理的仓库：
+      $ git init    瞬间Git就把仓库建好了，而且告诉你是一个空的仓库（empty Git repository），当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件。
+
+3. 创建一个文件，放在learngit目录或子目录下（ig. readme.txt）
+
+4. 一个文件放到Git仓库只需要两步。
+* 第一步，用命令git add告诉Git，把文件添加到仓库——添加到暂存区
+	$ git add readme.txt
+* 第二步，用命令git commit告诉Git，把文件提交到仓库——把暂存区的所有内容提交到当前分支，例如master
+	$ git commit -m "wrote a readme file"
+* 需要提交的文件修改通通放到暂存区，然后，一次性提交暂存区的所有修改。
+
+5. 修改 read.txt文件后，运行 git status 命令看结果， 将要被提交的修改包括哪些/当前没有需要提交的修改/工作目录working tree clean
+
+6. 运行 git diff readme.txt命令， 查看修改内容
+
+7. git log命令: 显示从最近到最远的提交日志
+      git log --pretty=oneline  显示更简洁
+
+8. 回到当前版本：$ git reset --hard HEAD          回到上一个版本：$ git reset --hard HEAD^      回到上100个版本： $ git reset --hard HEAD~100
+
+9. 看看当前版本是什么：$ cat readme.txt
+
+10. 恢复到某一版本号：$ git reset --hard commit_id(版本号前几位)
+
+11. 用来记录每一次命令：git reflog  可以显示每一次的版本commit id
+*  HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset --hard commit_id。
+* 穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。
+* 要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+
+12. git diff HEAD -- readme.txt  命令可以查看工作区和版本库里面最新版本的区别
+
+13. 若Git add 到暂存区，还没提交。 
+* $ git checkout — readme.txt——丢弃工作区的修改
+* $ git reset HEAD readme.txt——撤销暂存区的修改（unstage），重新放回工作区
+
+
+14. 若提交到了版本库，则要“版本回退”，前提是没有推送到远程库
+
+15. Status 
+* Save 工作区： On branch master
+Changes not staged for commit
+* add stage: On branch master
+Changes to be committed
+* Commit branch: On branch master
+nothing to commit, working tree clean
+
+16. 从版本库中删除一个文件，先手动删除文件，然后使用git rm <file>和git add<file>效果是一样的。
+* $ git rm test.txt 并且 git commit
+
+17. 远程库的名字就是origin，这是Git默认的叫法，也可以改成别的，但是origin这个名字一看就知道是远程库。
+
+18. 要关联一个远程库，使用命令
+* git remote add origin git@server-name:path/repo-name.git；
+* git remote add origin git@github.com:lisaintba/learngit.git
+19. 关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+20. 此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+
+21. 在github上创建远程库，用该命令克隆一个本地库：$ git clone git@github.com:lisaintba/gitskills.git
+
+22. 创建dev分支，并切换到dev分支：$ git checkout -b dev  该命令相当于以下两行命令
+* $ git branch dev
+* $ git checkout dev
+
+24. 创建并切换dev分支：命令  $ git switch -c dev
+25. 直接切换到已有的master分支：命令 $ git switch master
+
+25. 查看当前分支： $ git branch
+26. 在当前分支上提交，例如 dev分支
+27. dev分支的工作完成后，可以切换回master分支：命令$ git checkout master    切换后，在dev分支下添加的内容不见了
+28. 把dev分支的工作成果合并到master分支上：$ git merge dev         git merge命令用于合并指定分支到当前分支
+29. 合并完成后，可以删除dev分支：命令 $ git branch -d dev
